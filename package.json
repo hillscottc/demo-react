@@ -2,7 +2,7 @@
   "name": "demo-react",
   "version": "0.1.0",
   "description": "A demo react app",
-  "main": "server.js",
+  "main": "./server/server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/hillscottc/demo-react"
@@ -17,7 +17,7 @@
   "license": "MIT",
   "scripts": {
     "test": "",
-    "start": "node server",
+    "start": "node ./server/server.js",
     "build": "rimraf dist && set NODE_ENV=production && webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs ."
@@ -27,6 +27,7 @@
     "babel-polyfill": "^6.8.0",
     "debug": "^2.2.0",
     "isomorphic-fetch": "^2.2.1",
+    "mongoose": "^4.4.16",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
