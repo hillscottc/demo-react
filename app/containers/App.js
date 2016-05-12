@@ -3,37 +3,50 @@ import { connect } from 'react-redux'
 import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
+import Plants from '../components/Plants'
+// import PlantForm from '../components/PlantForm'
 import styles from './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleRefreshClick = this.handleRefreshClick.bind(this)
+    this.handleRefreshClick = this.handleRefreshClick.bind(this);
+    // this.handlePlantClick = this.handlePlantClick.bind(this);
   }
 
   componentDidMount() {
     const { dispatch, selectedReddit } = this.props;
-    dispatch(fetchPostsIfNeeded(selectedReddit))
+    dispatch(fetchPostsIfNeeded(selectedReddit));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedReddit !== this.props.selectedReddit) {
       const { dispatch, selectedReddit } = nextProps;
-      dispatch(fetchPostsIfNeeded(selectedReddit))
+      dispatch(fetchPostsIfNeeded(selectedReddit));
     }
   }
 
   handleChange(nextReddit) {
-    this.props.dispatch(selectReddit(nextReddit))
+    this.props.dispatch(selectReddit(nextReddit));
   }
 
   handleRefreshClick(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     const { dispatch, selectedReddit } = this.props;
     dispatch(invalidateReddit(selectedReddit));
-    dispatch(fetchPostsIfNeeded(selectedReddit))
+    dispatch(fetchPostsIfNeeded(selectedReddit));
+  }
+
+  handlePlantClick(e) {
+    e.preventDefault();
+    // const { dispatch, selectedReddit } = this.props;
+    // dispatch(invalidateReddit(selectedReddit));
+    // dispatch(fetchPostsIfNeeded(selectedReddit));
+
+    //dispatch(fetchPlantsIfNeeded());
+    alert("Click!");
   }
 
   render() {
@@ -64,6 +77,9 @@ class App extends Component {
             <Posts posts={posts} />
           </div>
           }
+          <h1>Plants</h1>
+          { /* <PlantForm onClick={this.handlePlantClick} /> */ }
+          <Plants plants={[{"id":"1", "name":"palm"},{"id":"2", "name":"bush"}]} />
         </div>
     )
   }
@@ -75,7 +91,7 @@ App.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired
-}
+};
 
 function mapStateToProps(state) {
   const { selectedReddit, postsByReddit } = state;
@@ -86,7 +102,7 @@ function mapStateToProps(state) {
   } = postsByReddit[selectedReddit] || {
     isFetching: true,
     items: []
-  }
+  };
 
   return {
     selectedReddit,
@@ -96,4 +112,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(App);
