@@ -5,6 +5,10 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const SELECT_REDDIT = 'SELECT_REDDIT';
 export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT';
 
+export const RECEIVE_PLANTS = 'RECEIVE_PLANTS';
+
+
+
 export function selectReddit(reddit) {
   return {
     type: SELECT_REDDIT,
@@ -62,3 +66,34 @@ export function fetchPostsIfNeeded(reddit) {
     }
   }
 }
+
+
+function fetchPlants() {
+  return dispatch => {
+
+    const plantsJson = [{"id": "1", "name": "palm"}, {"id": "2", "name": "bush"}];
+
+    return dispatch(receivePlants(plantsJson));
+
+  }
+}
+
+function receivePlants(plantsJson) {
+  return {
+    type: RECEIVE_PLANTS,
+    plants: plantsJson.data.children.map(child => child.data),
+    receivedAt: Date.now()
+  }
+}
+
+
+export function fetchPlantsIfNeeded() {
+  return (dispatch, getState) => {
+    if (shouldFetchPlants(getState())) {
+      return dispatch(fetchPlants())
+    }
+  }
+}
+
+
+
