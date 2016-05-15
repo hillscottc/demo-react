@@ -5,9 +5,6 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const SELECT_REDDIT = 'SELECT_REDDIT';
 export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT';
 
-export const RECEIVE_PLANTS = 'RECEIVE_PLANTS';
-
-
 
 export function selectReddit(reddit) {
   return {
@@ -16,6 +13,7 @@ export function selectReddit(reddit) {
   }
 }
 
+
 export function invalidateReddit(reddit) {
   return {
     type: INVALIDATE_REDDIT,
@@ -23,12 +21,14 @@ export function invalidateReddit(reddit) {
   }
 }
 
+
 function requestPosts(reddit) {
   return {
     type: REQUEST_POSTS,
     reddit
   }
 }
+
 
 function receivePosts(reddit, json) {
   return {
@@ -39,6 +39,7 @@ function receivePosts(reddit, json) {
   }
 }
 
+
 function fetchPosts(reddit) {
   return dispatch => {
     dispatch(requestPosts(reddit));
@@ -48,16 +49,18 @@ function fetchPosts(reddit) {
   }
 }
 
+
 function shouldFetchPosts(state, reddit) {
   const posts = state.postsByReddit[reddit];
   if (!posts) {
     return true
   }
-  if (posts.isFetching) {
+  if (posts.isFetchingReddit) {
     return false
   }
   return posts.didInvalidate
 }
+
 
 export function fetchPostsIfNeeded(reddit) {
   return (dispatch, getState) => {
@@ -66,34 +69,3 @@ export function fetchPostsIfNeeded(reddit) {
     }
   }
 }
-
-
-function fetchPlants() {
-  return dispatch => {
-
-    const plantsJson = [{"id": "1", "name": "palm"}, {"id": "2", "name": "bush"}];
-
-    return dispatch(receivePlants(plantsJson));
-
-  }
-}
-
-function receivePlants(plantsJson) {
-  return {
-    type: RECEIVE_PLANTS,
-    plants: plantsJson.data.children.map(child => child.data),
-    receivedAt: Date.now()
-  }
-}
-
-
-export function fetchPlantsIfNeeded() {
-  return (dispatch, getState) => {
-    if (shouldFetchPlants(getState())) {
-      return dispatch(fetchPlants())
-    }
-  }
-}
-
-
-

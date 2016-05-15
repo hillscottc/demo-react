@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-export default class PlantForm extends Component {
+export default class PlantPicker extends Component {
   render() {
     const {onClick} = this.props;
 
@@ -14,6 +14,6 @@ export default class PlantForm extends Component {
   }
 }
 
-PlantForm.propTypes = {
+PlantPicker.propTypes = {
   onClick: PropTypes.func.isRequired
 };

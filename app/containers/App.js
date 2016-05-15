@@ -1,29 +1,34 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions'
+import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions/reddit'
+import { selectPlant, fetchPlantsIfNeeded, invalidatePlant } from '../actions/plant'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 import Plants from '../components/Plants'
-// import PlantForm from '../components/PlantForm'
+import PlantPicker from '../components/PlantPicker'
 import styles from './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handlePlantChange = this.handlePlantChange.bind(this);
     this.handleRefreshClick = this.handleRefreshClick.bind(this);
-    // this.handlePlantClick = this.handlePlantClick.bind(this);
   }
 
   componentDidMount() {
-    const { dispatch, selectedReddit } = this.props;
+    const { dispatch, selectedReddit, selectedPlant } = this.props;
     dispatch(fetchPostsIfNeeded(selectedReddit));
+    dispatch(fetchPlantsIfNeeded(selectedPlant));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedReddit !== this.props.selectedReddit) {
       const { dispatch, selectedReddit } = nextProps;
       dispatch(fetchPostsIfNeeded(selectedReddit));
+    } else if (nextProps.selectedPlant !== this.props.selectedPlant) {
+      const { dispatch, selectedPlant } = nextProps;
+      dispatch(fetchPlantsIfNeeded(selectedPlant));
     }
   }
 
@@ -31,40 +36,47 @@ class App extends Component {
     this.props.dispatch(selectReddit(nextReddit));
   }
 
+  handlePlantChange(nextPlant) {
+    this.props.dispatch(selectPlant(nextPlant));
+  }  
+  
   handleRefreshClick(e) {
     e.preventDefault();
 
-    const { dispatch, selectedReddit } = this.props;
+    const { dispatch, selectedReddit, selectedPlant } = this.props;
     dispatch(invalidateReddit(selectedReddit));
+    dispatch(invalidatePlant(selectedPlant));
     dispatch(fetchPostsIfNeeded(selectedReddit));
+    dispatch(fetchPlantsIfNeeded(selectedPlant));
   }
-
-  handlePlantClick(e) {
-    e.preventDefault();
-    // const { dispatch, selectedReddit } = this.props;
-    // dispatch(invalidateReddit(selectedReddit));
-    // dispatch(fetchPostsIfNeeded(selectedReddit));
-
-    //dispatch(fetchPlantsIfNeeded());
-    alert("Click!");
-  }
-
+  
   render() {
-    const { selectedReddit, posts, isFetching, lastUpdated } = this.props;
+    const {
+        selectedReddit,
+        selectedPlant,
+        posts,
+        plants,
+        isFetchingReddit,
+        isFetchingPlants,
+        lastUpdatedReddit,
+        lastUpdatedPlants
+    } = this.props;
+
     const isEmpty = posts.length === 0;
+    const plantsEmpty = plants.length === 0;
     return (
         <div className={styles.app}>
           <Picker value={selectedReddit}
                   onChange={this.handleChange}
                   options={[ 'reactjs', 'frontend' ]} />
           <p>
-            {lastUpdated &&
+            {lastUpdatedReddit &&
             <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
+              Last updated at {new Date(lastUpdatedReddit).toLocaleTimeString()}.
               {' '}
             </span>
             }
-            {!isFetching &&
+            {!isFetchingReddit &&
             <a href="#"
                onClick={this.handleRefreshClick}>
               Refresh
@@ -72,14 +84,14 @@ class App extends Component {
             }
           </p>
           {isEmpty
-              ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-              : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+              ? (isFetchingReddit ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+              : <div style={{ opacity: isFetchingReddit ? 0.5 : 1 }}>
             <Posts posts={posts} />
           </div>
           }
           <h1>Plants</h1>
-          { /* <PlantForm onClick={this.handlePlantClick} /> */ }
-          <Plants plants={[{"id":"1", "name":"palm"},{"id":"2", "name":"bush"}]} />
+          <PlantPicker onClick={this.handlePlantChange} /> 
+          <Plants plants={plants} />
         </div>
     )
   }
@@ -87,28 +99,51 @@ class App extends Component {
 
 App.propTypes = {
   selectedReddit: PropTypes.string.isRequired,
+  selectedPlant: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  lastUpdated: PropTypes.number,
+  plants: PropTypes.array.isRequired,
+  isFetchingReddit: PropTypes.bool.isRequired,
+  isFetchingPlants: PropTypes.bool.isRequired,
+  lastUpdatedReddit: PropTypes.number,
+  lastUpdatedPlants: PropTypes.number,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-  const { selectedReddit, postsByReddit } = state;
   const {
-      isFetching,
-      lastUpdated,
+      selectedReddit, 
+      selectedPlant, 
+      postsByReddit, 
+      plantsByPlantQuery
+  } = state;
+  
+  const {
+      isFetchingReddit,
+      lastUpdatedReddit,
       items: posts
   } = postsByReddit[selectedReddit] || {
-    isFetching: true,
+    isFetchingReddit: true,
     items: []
   };
 
+  const {
+      isFetchingPlants,
+      lastUpdatedPlants,
+      items: plants
+  } = plantsByPlantQuery[selectedPlant] || {
+    isFetchingPlants: true,
+    items: []
+  };  
+
   return {
     selectedReddit,
+    selectedPlant,
     posts,
-    isFetching,
-    lastUpdated
+    plants,
+    isFetchingReddit,
+    isFetchingPlants,
+    lastUpdatedReddit,
+    lastUpdatedPlants
   }
 }
 
