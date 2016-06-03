@@ -1,13 +1,8 @@
 import React from 'react';
 import Button from './components/Button'
 import LikeButton from './components/LikeButton'
-import ClueList from './components/ClueList'
 import styles from './App.css';
 
-const someClues = [
-  {"id":1, "category": "philosophy", "question": "why", "answer": "because"},
-  {"id":2, "category": "history", "question": "when", "answer": "then"}
-];
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +12,6 @@ export default class App extends React.Component {
   }
 
   selectChange(value) {
-    // this.props.dispatch(selectReddit(nextReddit));
     console.log("Selected " + value);
   }
 
@@ -30,7 +24,6 @@ export default class App extends React.Component {
 
     return (
         <div className={styles.app}>
-          <ClueList clues={someClues} />
           <Button value={'Click me.'} onClick={this.buttonClick}/>
           <LikeButton />
         </div>

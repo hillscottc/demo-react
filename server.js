@@ -10,10 +10,7 @@ const config = require('./webpack.config.js');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
-const api = require('./api');
 
-// Enable api routes
-app.use('/api', api);
 
 if (isDeveloping) {
   const compiler = webpack(config);
