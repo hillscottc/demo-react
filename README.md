@@ -15,6 +15,12 @@ For development, `npm start`, then navigate to http://localhost:3000 in your bro
 For a production build, `npm run build` then you can open `./dist/index.html` in your browser.
 
 
+## Testing
+Uses [Mocha](https://mochajs.org/) + [Enzyme](https://github.com/airbnb/enzyme), as described [here](http://browniefed.com/blog/css-modules-webpack-and-testing/)
+
+    npm test
+
+
 ### Babel and Linting
     
     npm run eslint

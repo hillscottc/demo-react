@@ -18,5 +18,10 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
+Button.defaultProps = {
+  value: "Click me.",
+  onClick: (()  => {console.log("Click!")})
+};
+
 
 export default Button;
