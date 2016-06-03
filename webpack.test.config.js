@@ -1,6 +1,6 @@
 module.exports = {
   output: {
-    // YOU NEED TO SET libraryTarget: 'commonjs2'
+    // Important.
     libraryTarget: 'commonjs2'
   },
   module: {
