@@ -1,0 +1,41 @@
+.header {
+    background-color: lightgray;
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
+    padding: 0px 0px 10px 10px;
+    border: 0px solid #000000;
+
+}
+
+.header h1 a {
+    text-decoration: none;
+}
+
+.active {
+    color: goldenrod;
+}
+
+.header h1 {
+    padding: 0;
+    margin: 5px;
+    border:0;
+}
+
+.header nav {
+    background-color: lightblue;
+    padding: 0px 0px 0px 10px;
+}
+
+.header nav  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: smaller;
+}
+
+.header nav  ul li {
+    display: inline;
+    padding: 5px;
+}
+
