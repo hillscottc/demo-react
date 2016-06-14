@@ -1,0 +1,25 @@
+
+.cat {
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
+    border: 0px solid #000000;
+    background-color:#E3A20B;
+    padding: 15px;
+    margin: 10px;
+    display: inline-block;
+}
+
+
+.catList nav {
+    display: inline-block;
+}
+
+.catList header {
+    margin: 10px 0 0 5px;
+    font-size: x-large;
+}
+
+.catList header span {
+    margin-right: 25px;
+}

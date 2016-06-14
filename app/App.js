@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from './components/Button'
 import Header from './components/Header'
-import LikeButton from './components/LikeButton'
 import styles from './App.css';
 
 
@@ -9,12 +7,10 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cats: [],
+      cats: [{category_id: 1, category_name: "history"}, {category_id: 2, category_name: "math"}],
       numCatsToShow: 10,
       catsToShowOptions: ["10", "20", "50"]
     };
-    // this.selectChange = this.selectChange.bind(this);
-    // this.buttonClick = this.buttonClick.bind(this);
     this.changeNumCatsToShow = this.changeNumCatsToShow.bind(this);
 
   }
@@ -24,8 +20,7 @@ export default class App extends React.Component {
     console.log("Change!");
     // this.getCats(parseInt(value));
   }
-
-
+  
   render() {
     const {cats, catsToShowOptions, numCatsToShow} = this.state;
     return (
@@ -36,7 +31,7 @@ export default class App extends React.Component {
             catsToShowOptions: catsToShowOptions,
             numCatsToShow: numCatsToShow,
             changeNumCatsToShow: this.changeNumCatsToShow
-          })}
+          })};
         </div>
     );
   }

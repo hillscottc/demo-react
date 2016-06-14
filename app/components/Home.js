@@ -1,8 +1,11 @@
 import React from 'react'
+import LikeButton from './LikeButton'
+
 
 const Home = () => (
     <div>
-      hello world
+      <p>hello world</p>
+      <LikeButton />
     </div>
 );
 

@@ -5,13 +5,12 @@ import { Link } from 'react-router'
 const Header = () => (
     <header className={styles.header}>
       <h1>
-        <Link to="/">trivnode-react</Link>
+        <Link to="/">demo-react</Link>
       </h1>
       <nav>
         <ul>
-          <li><Link to="/cats" activeClassName={styles.active} >cats</Link></li>
-          <li><Link to="/clues" activeClassName={styles.active}>clues</Link></li>
-          <li><Link to="/about" activeClassName={styles.active}>about</Link></li>
+          <li><Link to="/" activeClassName={styles.active} >Home</Link></li>
+          <li><Link to="/cats" activeClassName={styles.active} >Categories</Link></li>
         </ul>
       </nav>
     </header>
